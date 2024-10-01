@@ -52,3 +52,26 @@ root.left.right = new BinaryTreeNode(4);
 root.right.left = new BinaryTreeNode(4);
 root.right.right = new BinaryTreeNode(3);
 console.log(isSymmetric(root));  // Outputs: true
+
+const root2 = new BinaryTreeNode(1);
+root2.left = new BinaryTreeNode(2);
+root2.right = new BinaryTreeNode(2);
+root2.left.right = new BinaryTreeNode(3);
+root2.right.right = new BinaryTreeNode(3);
+console.log(isSymmetric(root2));  // Outputs: false
+
+// add alternative solution
+function isSymmetric2(root: BinaryTreeNode | null): boolean {
+    if (!root) return true;
+    const queue: (BinaryTreeNode | null)[] = [root.left, root.right];
+    while (queue.length) {
+        const left = queue.shift();
+        const right = queue.shift();
+        if (!left && !right) continue;
+        if (!left || !right || left.val !== right.val) return false;
+        queue.push(left.left, right.right, left.right, right.left);
+    }
+    return true;
+}
+console.log(isSymmetric2(root));  // Outputs: true
+console.log(isSymmetric2(root2));  // Outputs: false
